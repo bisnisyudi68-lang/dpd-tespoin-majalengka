@@ -53,7 +53,7 @@ fetch(sheetUrl)
 
   rows.forEach(r=>{
   const c=r.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/);
-    const p=c[0].split(/[\/ :]/);
+
 const tgl=c[0].trim();
 const d=tgl.split(" ");
 const ymd=d[0].split("/");
