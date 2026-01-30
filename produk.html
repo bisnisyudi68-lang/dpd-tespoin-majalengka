@@ -66,12 +66,12 @@ const waktu=new Date(
     const hari=(now-waktu)/86400000;
 
     if(hari<=7){
-      const nama=c[1];
-      const des=c[2];
-      const harga=c[3];
-      const wa=c[4];
-      let img = c[5];
 
+const nama = c[1];
+const des  = c[2];
+const harga = c[6]; // ambil dari G (harga_fix)
+const wa = c[7];    // ambil dari H (wa_fix)
+let img = c[8];     // ambil dari I (foto_fix) 
 if(img.includes("drive.google")){
   const id = img.match(/[-\w]{25,}/);
   if(id){
@@ -90,8 +90,8 @@ if(img.includes("drive.google")){
            WhatsApp Penjual
         </a>
       </div>`;
-    }
-  });
+}
+});
 });
 </script>
 
