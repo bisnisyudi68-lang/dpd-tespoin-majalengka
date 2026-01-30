@@ -13,25 +13,71 @@
 
 <h1 class="text-xl font-bold text-center mb-4">Produk DPD TESPOIN Majalengka</h1>
 
-<div class="text-center mb-6">
-<img src="unlocktool.jpg" class="mx-auto w-40 rounded shadow mb-2">
-<p class="font-semibold">Unlock Tool</p>
-<p class="text-sm text-gray-600">Rental / Sewa Harian: Rp10.000</p>
-<div class="mt-4 text-sm text-gray-700 text-center">
-<p class="mb-2">
-Silahkan transfer ke rekening <br>BSI 7342320095 </b><br> <b>DPD TESPOIN MAJALENGKA</b>
-</p>
+<!-- PRODUK PATEN -->
+<h2 class="text-lg font-semibold mt-4 mb-2 text-green-700">🟢 Produk DPD (Tetap)</h2>
+<div id="produkTetap" class="space-y-4">
 
-<a href="https://wa.me/6282319264646?text=Saya%20mau%20sewa%20unlocktool%20ini%20bukti%20transfer%20nya"
-class="inline-block bg-green-600 text-white px-4 py-2 rounded mt-2">
-Kirim Bukti Transfer via WhatsApp
+<!-- CONTOH PRODUK PATEN -->
+<div class="bg-gray-50 rounded shadow p-4">
+<img src="unlocktool.jpg" class="w-full rounded mb-2">
+<h3 class="font-bold">Unlock Tool</h3>
+<p>Rental / Sewa Harian</p>
+<p class="text-green-600 font-semibold">Rp 10.000</p>
+<a href="https://wa.me/6282319264646?text=Saya%20mau%20sewa%20Unlock%20Tool"
+class="block bg-green-600 text-white text-center p-2 rounded mt-2">
+WhatsApp Admin
 </a>
 </div>
-</div>
-
-<a href="index.html" class="block text-center text-blue-600">← Kembali ke Beranda</a>
 
 </div>
+
+<!-- PRODUK MEMBER -->
+<h2 class="text-lg font-semibold mt-6 mb-2 text-orange-600">🟡 Produk Member (7 Hari)</h2>
+<div id="produkMember" class="space-y-4"></div>
+
+<a href="index.html" class="block text-center text-blue-600 mt-6">← Kembali ke Beranda</a>
+
+</div>
+
+<script>
+fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vR-bDX_S5Cwma6e7vlf8Of4XVwccJ9ukNFZODZg08gqRgjaK7gCN5xMIFIgMgAbgXw44dz8BrinQBBR/pub?gid=833555455&single=true&output=csv")
+.then(r=>r.text())
+.then(t=>{
+const rows=t.trim().split("\n").slice(1);
+const box=document.getElementById("produkMember");
+
+rows.forEach(r=>{
+const c=r.split(",");
+const waktu=new Date(c[0]);
+const now=new Date();
+const hari=(now-waktu)/86400000;
+
+if(hari<=7){
+const nama=c[1];
+const des=c[2];
+const harga=Number(c[3].replace(/[^0-9]/g,""));
+const wa=c[4];
+const foto=c[5];
+
+box.innerHTML+=`
+<div class="bg-gray-50 rounded shadow p-4">
+<img src="${foto}" class="w-full rounded mb-2">
+<h3 class="font-bold">${nama}</h3>
+<p>${des}</p>
+<p class="text-green-600 font-semibold">Rp ${harga.toLocaleString("id-ID")}</p>
+<a href="https://wa.me/${wa}?text=Saya%20tertarik%20produk%20${encodeURIComponent(nama)}"
+class="block bg-green-600 text-white text-center p-2 rounded mt-2">
+Chat Penjual
+</a>
+</div>`;
+}
+});
+
+if(!box.innerHTML){
+box.innerHTML="<p class='text-gray-500 text-center'>Belum ada produk member.</p>";
+}
+});
+</script>
 
 </body>
-</html>produk.html
+</html>
