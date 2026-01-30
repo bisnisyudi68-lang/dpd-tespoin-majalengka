@@ -53,7 +53,8 @@ fetch(sheetUrl)
 
   rows.forEach(r=>{
   const c=r.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/);
-    const waktu=new Date(c[0]);
+    const p=c[0].split(/[\/ :]/);
+const waktu=new Date(p[2],p[1]-1,p[0],p[3],p[4],p[5]);
     const now=new Date();
     const hari=(now-waktu)/86400000;
 
