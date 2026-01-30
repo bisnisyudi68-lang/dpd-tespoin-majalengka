@@ -54,7 +54,15 @@ fetch(sheetUrl)
   rows.forEach(r=>{
   const c=r.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/);
     const p=c[0].split(/[\/ :]/);
-const waktu=new Date(p[2],p[1]-1,p[0],p[3],p[4],p[5]);
+const tgl=c[0].trim();
+const d=tgl.split(" ");
+const ymd=d[0].split("/");
+const hms=d[1].split(":");
+
+const waktu=new Date(
+  ymd[2], ymd[1]-1, ymd[0],
+  hms[0], hms[1], hms[2]
+);
     const now=new Date();
     const hari=(now-waktu)/86400000;
 
