@@ -72,12 +72,7 @@ const des  = c[2];
 const harga = c[6]; // ambil dari G (harga_fix)
 const wa = c[7];    // ambil dari H (wa_fix)
 let img = c[8];     // ambil dari I (foto_fix) 
-if(img.includes("drive.google")){
-  const id = img.match(/[-\w]{25,}/);
-  if(id){
-    img = "https://drive.google.com/uc?export=view&id=" + id[0];
-  }
-}
+
 
       box.innerHTML+=`
       <div class="border rounded p-3">
