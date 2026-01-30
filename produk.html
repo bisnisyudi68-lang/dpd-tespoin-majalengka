@@ -183,43 +183,33 @@ fetch(sheetUrl)
 .then(r=>r.text())
 .then(t=>{
   const rows=t.trim().split(/\r?\n/).slice(1);
-  const box=document.getElementById("produkMember");
+  const box = document.getElementById("produkMember");
 
   rows.forEach(r=>{
-  const c=r.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/);
+    const c=r.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/);
 
-const tgl=c[0].trim();
-const d=tgl.split(" ");
-const ymd=d[0].split("/");
-const hms=d[1].split(":");
+    const nama = c[1];
+    const harga = c[6];
+    const wa = c[7];
+    const img = "https://ibb.co.com/hRkDdMKx";
 
-const waktu=new Date(
-  ymd[2], ymd[1]-1, ymd[0],
-  hms[0], hms[1], hms[2]
-);
-    const now=new Date();
-    const hari=(now-waktu)/86400000;
+    box.innerHTML+=`
+    <div class="bg-white rounded shadow p-2">
 
-    if(hari<=7){
+      <img src="${img}" class="w-full h-36 object-cover rounded">
 
-const nama = c[1];
-const des  = c[2];
-const harga = c[6]; // ambil dari G (harga_fix)
-const wa = c[7];    // ambil dari H (wa_fix)
-let img = "https://ibb.co.com/hRkDdMKx";
-      box.innerHTML+=`
-      <div class="border rounded p-3">
-        <img src="${img}" class="w-full rounded mb-2">
-        <b>${nama}</b>
-        <p>${des}</p>
-        <p class="text-green-600">Rp ${harga}</p>
-        <a href="https://wa.me/${wa}" target="_blank"
-class="inline-block mt-3 bg-green-500 text-white py-2 px-6 rounded-xl">
-WhatsApp Penjual
-</a>
-      </div>`;
-}
-});
+      <h3 class="text-sm font-semibold mt-2">${nama}</h3>
+
+      <p class="text-green-600 font-bold mt-1">Rp ${harga}</p>
+
+      <a href="https://wa.me/${wa}" target="_blank"
+      class="block bg-green-600 text-white text-center mt-2 py-1 rounded text-sm">
+      WhatsApp Penjual
+      </a>
+
+    </div>
+    `;
+  });
 });
 </script>
 
