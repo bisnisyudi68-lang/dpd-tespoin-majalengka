@@ -44,41 +44,39 @@ WhatsApp Admin
 
 <script>
 const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR-bDX_S5Cwma6e7vlf8Of4XVwccJ9ukNFZODZg08gqRgjaK7gCN5xMIFIgMgAbgXw44dz8BrinQBBR/pubhtml?gid=833555455&single=true&output=csv";
+
+fetch(sheetUrl)
 .then(r=>r.text())
 .then(t=>{
-const rows=t.trim().split("\n").slice(1);
-const box=document.getElementById("produkMember");
+  const rows=t.trim().split("\n").slice(1);
+  const box=document.getElementById("produkMember");
 
-rows.forEach(r=>{
-const c=r.split(",");
-const waktu=new Date(c[0]);
-const now=new Date();
-const hari=(now-waktu)/86400000;
+  rows.forEach(r=>{
+    const c=r.split(",");
+    const waktu=new Date(c[0]);
+    const now=new Date();
+    const hari=(now-waktu)/86400000;
 
-if(hari<=7){
-const nama=c[1];
-const des=c[2];
-const harga=Number(c[3].replace(/[^0-9]/g,""));
-const wa=c[4];
-const foto=c[5];
+    if(hari<=7){
+      const nama=c[1];
+      const des=c[2];
+      const harga=c[3];
+      const wa=c[4];
+      const img=c[5];
 
-box.innerHTML+=`
-<div class="bg-gray-50 rounded shadow p-4">
-<img src="${foto}" class="w-full rounded mb-2">
-<h3 class="font-bold">${nama}</h3>
-<p>${des}</p>
-<p class="text-green-600 font-semibold">Rp ${harga.toLocaleString("id-ID")}</p>
-<a href="https://wa.me/${wa}?text=Saya%20tertarik%20produk%20${encodeURIComponent(nama)}"
-class="block bg-green-600 text-white text-center p-2 rounded mt-2">
-Chat Penjual
-</a>
-</div>`;
-}
-});
-
-if(!box.innerHTML){
-box.innerHTML="<p class='text-gray-500 text-center'>Belum ada produk member.</p>";
-}
+      box.innerHTML+=`
+      <div class="border rounded p-3">
+        <img src="${img}" class="w-full rounded mb-2">
+        <b>${nama}</b>
+        <p>${des}</p>
+        <p class="text-green-600">Rp ${harga}</p>
+        <a href="https://wa.me/62${wa.substring(1)}" target="_blank"
+           class="block bg-green-600 text-white text-center mt-2 p-2 rounded">
+           WhatsApp Penjual
+        </a>
+      </div>`;
+    }
+  });
 });
 </script>
 
