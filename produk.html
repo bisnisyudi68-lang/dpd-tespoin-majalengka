@@ -70,9 +70,14 @@ const waktu=new Date(
       const des=c[2];
       const harga=c[3];
       const wa=c[4];
-      const img = c[5].includes("drive.google")
-  ? "https://via.placeholder.com/300"
-  : c[5];
+      let img = c[5];
+
+if(img.includes("drive.google")){
+  const id = img.match(/[-\w]{25,}/);
+  if(id){
+    img = "https://drive.google.com/uc?export=view&id=" + id[0];
+  }
+}
 
       box.innerHTML+=`
       <div class="border rounded p-3">
