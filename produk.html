@@ -52,7 +52,7 @@ fetch(sheetUrl)
   const box=document.getElementById("produkMember");
 
   rows.forEach(r=>{
-    const c=r.split(",");
+  const c=r.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/);
     const waktu=new Date(c[0]);
     const now=new Date();
     const hari=(now-waktu)/86400000;
