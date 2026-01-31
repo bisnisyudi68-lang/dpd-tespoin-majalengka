@@ -196,8 +196,9 @@ fetch(sheetUrl)
   const box = document.getElementById("produkMember");
 
   rows.forEach(r=>{
-    const c=r.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/);
-if(!c[1] || !c[6]) return;
+  const c = r.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/);
+
+  if(!c[1] || !c[6] || !c[7] || !c[8]) return;
     const nama = c[1];   // Produk
 const harga = c[7]; // H = Harga_fix
 const wa = c[8];    // I = no whatsapp
