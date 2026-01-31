@@ -200,7 +200,7 @@ fetch(sheetUrl)
 
     const nama = c[1];
     const harga = c[6] || "";
-    const wa = c[7];
+    const wa = c[7] || "";
     const img = c[5];
 
     box.innerHTML+=`
@@ -213,7 +213,7 @@ fetch(sheetUrl)
       <p class="text-green-600 font-bold mt-1">Rp ${harga}</p>
 
       <a href="https://wa.me/${wa}" target="_blank"
-      class="block bg-green-600 text-white text-center mt-2 py-1 rounded text-sm">
+      class="block bg-green-600 hover:bg-green-700 text-white text-center mt-2 py-2 rounded-xl text-sm font-semibold">
       WhatsApp Penjual
       </a>
 
