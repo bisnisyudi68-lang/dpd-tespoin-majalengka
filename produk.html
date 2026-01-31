@@ -199,26 +199,13 @@ fetch(sheetUrl)
   rows.forEach(r=>{
   const c = r.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/);
 
-  if(!c[1] || !c[5] || !c[7] || !c[8]) return;
-    const nama = c[1];   // Produk
-const harga = c[7]; // H = Harga_fix
-const wa = c[8];    // I = no whatsapp
-let img = c[5];     // F = Poto produk
+  if(!c[1] || !c[6] || !c[7] || !c[8]) return;
 
-// convert google drive link to direct image
-if(img.includes("drive.google.com")){
-  let id = "";
+const nama = c[1];   // B = Produk
+const harga = c[6]; // G = Harga_fix
+const wa = c[7];    // H = no whatsapp
+const img = c[8];   // I = Foto_fix
 
-  if(img.includes("/d/")){
-    id = img.split("/d/")[1].split("/")[0];
-  } else if(img.includes("id=")){
-    id = img.split("id=")[1].split("&")[0];
-  }
-
-  if(id){
-    img = "https://drive.google.com/uc?export=view&id=" + id;
-  }
-}
 
     box.innerHTML+=`
     <div class="bg-white rounded shadow p-2">
