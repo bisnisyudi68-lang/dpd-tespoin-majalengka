@@ -199,14 +199,14 @@ fetch(sheetUrl)
     const c=r.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/);
 
     const nama = c[1];
-    const harga = c[6];
+    const harga = c[6] || "";
     const wa = c[7];
     const img = c[5];
 
     box.innerHTML+=`
     <div class="bg-white rounded shadow p-2">
 
-      <img src="${img}" class="w-full h-36 object-cover rounded">
+      <img src="${img}" onerror="this.style.display='none'" class="w-full h-36 object-cover rounded">
 
       <h3 class="text-sm font-semibold mt-2">${nama}</h3>
 
