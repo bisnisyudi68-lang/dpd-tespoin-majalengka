@@ -198,10 +198,10 @@ fetch(sheetUrl)
   rows.forEach(r=>{
     const c=r.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/);
 
-    const nama = c[1];
-    const harga = c[6] || "";
-    const wa = c[7] || "";
-    let img = c[5] || "";
+    const nama = c[1];      // Produk
+const harga = c[7];    // Harga_fix
+const wa = c[8];       // no whatsapp
+let img = c[9];        // Foto_fix
 
 // convert google drive link to direct image
 if(img.includes("drive.google.com")){
