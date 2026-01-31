@@ -201,7 +201,22 @@ fetch(sheetUrl)
     const nama = c[1];
     const harga = c[6] || "";
     const wa = c[7] || "";
-    const img = c[5];
+    let img = c[5] || "";
+
+// convert google drive link to direct image
+if(img.includes("drive.google.com")){
+  let id = "";
+
+  if(img.includes("/d/")){
+    id = img.split("/d/")[1].split("/")[0];
+  } else if(img.includes("id=")){
+    id = img.split("id=")[1].split("&")[0];
+  }
+
+  if(id){
+    img = "https://drive.google.com/uc?export=view&id=" + id;
+  }
+}
 
     box.innerHTML+=`
     <div class="bg-white rounded shadow p-2">
