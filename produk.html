@@ -199,7 +199,7 @@ fetch(sheetUrl)
   rows.forEach(r=>{
   const c = r.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/);
 
-  if(!c[1] || !c[6] || !c[7] || !c[5]) return;
+  if(!c[1] || !c[6] || !c[7]) return;
 
 const nama = c[1];
 const harga = c[6];
