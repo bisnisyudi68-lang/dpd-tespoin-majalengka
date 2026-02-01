@@ -205,7 +205,7 @@ const nama = c[1];
 const harga = c[6];
 const wa = c[7];
 let img = c[8]; // kolom I Foto.fix
-if(!img) img = "#";
+if(!img) img = "";
 
 if(img){
   if(img.includes("open?id=")){
@@ -229,10 +229,10 @@ if(id){
     box.innerHTML+=`
     <div class="bg-white rounded shadow p-2">
 
-<a href="${img}" target="_blank" rel="noopener"
-class="block text-blue-600 underline text-xs mt-1">
+<button onclick="window.open('${img}','_blank')"
+class="block w-full text-blue-600 underline text-xs mt-1">
 Lihat Foto Produk
-</a>
+</button>
 
       <h3 class="text-sm font-semibold mt-2">${nama}</h3>
 
