@@ -204,7 +204,16 @@ fetch(sheetUrl)
 const nama = c[1];
 const harga = c[6];
 const wa = c[7];
-let img = c[5];   // F = Upload poto produk
+let img = c[8]; // kolom I Foto.fix
+
+if(img){
+  if(img.includes("open?id=")){
+    img = img.replace("open?id=","uc?export=view&id=");
+  }
+  if(img.includes("/file/d/")){
+    img = "https://drive.google.com/uc?export=view&id=" + img.split("/d/")[1].split("/")[0];
+  }
+}
 
 if(img.includes("/d/")){
  id = img.split("/d/")[1].split("/")[0];
