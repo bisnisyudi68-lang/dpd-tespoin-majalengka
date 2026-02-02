@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Teknisi Kabupaten Majalengka</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+
+<div class="max-w-5xl mx-auto p-4">
+
+<h1 class="text-2xl font-bold text-center mb-4">
+📋 Data Teknisi Kabupaten Majalengka
+</h1>
+
+<div class="text-center mb-4">
+<a href="https://forms.gle/tk4sr2RgfRaoBaQS9" target="_blank"
+class="bg-green-500 text-white px-4 py-2 rounded-lg">
+➕ Daftar / Tambah Data Teknisi
+</a>
+</div>
+
+<div id="list" class="grid md:grid-cols-2 gap-4"></div>
+
+</div>
+
+<script>
+const csvUrl = "https://docs.google.com/spreadsheets/d/19AfachAS9ZyNuut61RB1wqyI_AI6BsmNT1SIWhmSIn8/export?format=csv&gid=833555455";
+
+fetch(csvUrl)
+.then(res=>res.text())
+.then(text=>{
+const rows = text.split("\n").slice(1);
+
+rows.forEach(r=>{
+const c = r.split(",");
+
+if(!c[1]) return;
+
+document.getElementById("list").innerHTML += `
+<div class="bg-white rounded-xl shadow p-4">
+<p class="font-bold text-lg">${c[1]}</p>
+<p class="text-sm text-gray-600">${c[2]}</p>
+<p class="mt-1">Bidang: ${c[3]}</p>
+<p class="mt-1">WA: <a class="text-green-600" href="https://wa.me/62${c[4].replace(/^0/,'')}" target="_blank">${c[4]}</a></p>
+<p class="text-sm mt-1">Medsos: ${c[5]}</p>
+</div>
+`;
+});
+});
+</script>
+
+</body>
+</html>
