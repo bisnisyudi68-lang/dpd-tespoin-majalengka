@@ -37,6 +37,11 @@ rows.forEach(r=>{
 const c = r.split(",");
 
 if(!c[1]) return;
+const nama = c[1];
+const alamat = c[2];
+const bidang = c[3];
+const wa = c[4];
+const medsos = c[5];
 
 document.getElementById("list").innerHTML += `
 <div class="bg-white rounded-xl shadow p-4">
