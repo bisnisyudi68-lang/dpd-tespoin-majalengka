@@ -110,34 +110,48 @@ Tulis Pesanan
 </div>
 
 <!-- ================= PRODUK MEMBER ================= -->
+<h2 class="text-lg font-semibold mt-6 mb-2 text-orange-600">🟡 Produk Member (7 Hari)</h2>
 
-<h2 class="text-lg font-semibold mt-6 mb-2 text-orange-600">
-🟡 Produk Member (7 Hari)
-</h2>
+<p class="text-sm mb-3">
+Anda juga dapat memasukkan produk jualan Anda di sini untuk dijual.
+</p>
 
 <a href="https://forms.gle/peiJzeChctJu7bkx7"
 target="_blank"
-class="block text-center bg-green-500 text-white py-3 rounded-xl font-semibold mb-4">
-➕ Upload Produk Anda
+class="block text-center mt-2 bg-green-500 hover:bg-green-600 text-white py-3 px-4 rounded-xl font-semibold">
+➕ Upload Produk Anda Di Sini
 </a>
 
-<div id="produkMember" class="grid grid-cols-2 gap-3"></div>
+<p class="text-center mt-2">
+<a href="https://drive.google.com/file/d/1y78HwSs9IUM_S0XaXHUh0B6AwYXQsjCv/view"
+target="_blank"
+class="text-blue-600 font-bold underline">
+📘 Tutorial Jual Produk (Klik di sini)
+</a>
+</p>
+
+<div id="produkMember" class="grid grid-cols-1 gap-3 mt-4"></div>
+
+<a href="index.html" class="block text-center text-blue-600 mt-6">← Kembali ke Beranda</a>
 
 <script>
 const sheetUrl="https://docs.google.com/spreadsheets/d/19AfachAS9ZyNuut61RB1wqyI_AI6BsmNT1SIWhmSIn8/export?format=csv&gid=833555455";
 
-fetch(sheetUrl).then(r=>r.text()).then(t=>{
+fetch(sheetUrl)
+.then(r=>r.text())
+.then(t=>{
 const rows=t.trim().split(/\r?\n/).slice(1);
 const box=document.getElementById("produkMember");
 
 rows.forEach(r=>{
 const c=r.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/);
 
-if(!c[1]||!c[3]||!c[4]) return;
+if(!c[1]) return;
 
-const nama=c[1];   // Nama produk
-const harga=c[3]; // Harga
-const wa=c[4];    // WA
+const nama=c[1];
+const desk=c[2];
+const harga=c[3];
+const wa=c[4];
 let img=c[5]||"";
 
 if(img.includes("drive.google.com")){
@@ -148,11 +162,15 @@ if(id) img="https://drive.google.com/uc?export=view&id="+id;
 }
 
 box.innerHTML+=`
-<div class="bg-white rounded shadow p-2">
+<div class="bg-white rounded shadow p-3">
 
-<img src="${img}" onerror="this.style.display='none'" class="w-full h-36 object-cover rounded">
+<a href="${img}" target="_blank" class="text-blue-600 underline text-sm font-bold">
+Lihat Foto Produk
+</a>
 
-<h3 class="text-lg font-bold mt-2">${nama}</h3>
+<h3 class="text-lg font-bold mt-1">${nama}</h3>
+
+<p class="text-xs">${desk||""}</p>
 
 <p class="text-green-600 font-bold mt-1">Rp ${harga}</p>
 
