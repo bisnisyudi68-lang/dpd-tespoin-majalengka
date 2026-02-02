@@ -36,24 +36,26 @@ const rows = text.split("\n").slice(1);
 rows.forEach(r=>{
 const c = r.split(",");
 
-if(!c[1]) return;
+if(!c[1] || c[1]=="NAMA") return;
+
 const nama = c[1];
 const alamat = c[2];
 const bidang = c[3];
 const wa = c[4];
-const medsos = c[5];
+const medsos = c[5] || "-";
 
 document.getElementById("list").innerHTML += `
-<div class="bg-white rounded-xl shadow p-4">
-<p class="font-bold text-lg">${c[1]}</p>
-<p class="text-sm text-gray-600">${c[2]}</p>
-<p class="mt-1">Bidang: ${c[3]}</p>
-<p class="mt-1">WA: <a class="text-green-600" href="https://wa.me/62${c[4].replace(/^0/,'')}" target="_blank">${c[4]}</a></p>
-<p class="text-sm mt-1">Medsos: ${c[5]}</p>
+<div class="bg-white rounded-xl shadow p-4 mb-3">
+<p class="font-bold text-lg">${nama}</p>
+<p class="text-sm text-gray-600">${alamat}</p>
+<p class="mt-1"><b>Bidang:</b> ${bidang}</p>
+<p class="mt-1"><b>WA:</b>
+<a class="text-green-600"
+href="https://wa.me/62${wa.replace(/^0/,'')}"
+target="_blank">${wa}</a></p>
+<p class="text-sm mt-1"><b>Medsos:</b> ${medsos}</p>
 </div>
 `;
-});
-});
 </script>
 
 </body>
