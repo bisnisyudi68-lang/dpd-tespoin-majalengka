@@ -10,6 +10,9 @@ body{
  margin:0;
  font-family:Arial;
  background:#efeae2;
+ height:100vh;
+ display:flex;
+ flex-direction:column;
 }
 
 .header{
@@ -21,14 +24,17 @@ body{
 }
 
 .chat-box{
- height:78vh;
+ flex:1;
  overflow-y:auto;
  padding:10px;
+ display:flex;
+ flex-direction:column;
+ justify-content:flex-end;
 }
 
 .row{
  display:flex;
- margin-bottom:6px;
+ margin:4px 0;
 }
 
 .me-row{
@@ -46,21 +52,13 @@ body{
  font-size:14px;
 }
 
-.me{
- background:#dcf8c6;
-}
-
-.other{
- background:white;
-}
+.me{ background:#dcf8c6; }
+.other{ background:white; }
 
 .input-area{
  display:flex;
  padding:8px;
  background:white;
- position:fixed;
- bottom:0;
- width:100%;
 }
 
 input{
@@ -105,9 +103,9 @@ function send(){
  msg.innerText=t.value;
 
  row.appendChild(msg);
- document.getElementById("chat").appendChild(row);
+ chat.appendChild(row);
+ chat.scrollTop=chat.scrollHeight;
 
- document.getElementById("chat").scrollTop=99999;
  t.value="";
 }
 </script>
