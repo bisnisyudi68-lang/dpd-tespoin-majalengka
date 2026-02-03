@@ -8,11 +8,17 @@
 <style>
 body{
  margin:0;
+ background:#ddd;
  font-family:Arial;
- background:#efeae2;
+}
+
+.app{
+ max-width:480px;
+ margin:auto;
  height:100vh;
  display:flex;
  flex-direction:column;
+ background:#efeae2;
 }
 
 .header{
@@ -37,13 +43,8 @@ body{
  margin:4px 0;
 }
 
-.me-row{
- justify-content:flex-end;
-}
-
-.other-row{
- justify-content:flex-start;
-}
+.me-row{ justify-content:flex-end; }
+.other-row{ justify-content:flex-start; }
 
 .msg{
  max-width:70%;
@@ -81,6 +82,8 @@ button{
 
 <body>
 
+<div class="app">
+
 <div class="header">Chat DPD TESPOIN</div>
 
 <div class="chat-box" id="chat"></div>
@@ -88,6 +91,8 @@ button{
 <div class="input-area">
 <input id="text" placeholder="Ketik pesan...">
 <button onclick="send()">➤</button>
+</div>
+
 </div>
 
 <script>
