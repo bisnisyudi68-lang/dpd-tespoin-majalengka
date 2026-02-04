@@ -156,11 +156,9 @@ Cek harga LCD, aksesoris & battery
 
 <p class="font-bold mt-2">Rp 0</p>
 
-<a href="https://wa.me/628388811600?text=(Y)Halo%20kak,%20saya%20mau%20pesan%20LCD"
-target="_blank"
-class="inline-block mt-3 bg-green-500 text-white py-2 px-6 rounded-xl">
+<button onclick="pilihWA()" class="inline-block mt-3 bg-green-500 text-white py-2 px-6 rounded-xl">
 Tulis Pesanan
-</a>
+</button>
 
 </div>
 </div>
@@ -230,6 +228,22 @@ Lihat Foto Produk
   });
 });
 </script>
+<script>
+function pilihWA() {
+  let p = prompt(
+    "Pilih Admin:\n1 = Admin A\n2 = Admin B\n3 = Admin C"
+  );
 
+  if (p == "1") {
+    window.open("https://wa.me/628388811600?text=Halo%20kak,%20saya%20mau%20pesan%20LCD");
+  } 
+  else if (p == "2") {
+    window.open("https://wa.me/6282320015758?text=Halo%20kak,%20saya%20mau%20pesan%20LCD");
+  } 
+  else if (p == "3") {
+    window.open("https://wa.me/6282319264646?text=Halo%20kak,%20saya%20mau%20pesan%20LCD");
+  }
+}
+</script>
 </body>
 </html>
