@@ -218,10 +218,11 @@ Lihat Foto Produk
 
       <p class="text-green-600 font-bold mt-1"> ${harga}</p>
 
-      <a href="https://wa.me/${wa}" target="_blank"
-      class="block bg-green-600 hover:bg-green-700 text-white text-center mt-2 py-2 rounded-xl text-sm font-semibold">
-      WhatsApp Penjual
-      </a>
+      <a href="https://wa.me/${wa}?text=${encodeURIComponent('Halo kak, saya mau tanya produk ' + nama + ', apakah sudah laku?')}"
+target="_blank"
+class="block bg-green-600 hover:bg-green-700 text-white text-center py-2 rounded mt-2">
+WhatsApp Penjual
+</a>
 
     </div>
     `;
