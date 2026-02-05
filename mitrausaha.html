@@ -1,1 +1,110 @@
 
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mitra Usaha - DPD TESPOIN Majalengka</title>
+
+<style>
+body{
+  font-family: Arial, sans-serif;
+  background:#f2f2f2;
+  margin:0;
+}
+
+.container{
+  max-width:600px;
+  margin:20px auto;
+  background:#fff;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 2px 6px rgba(0,0,0,.1);
+}
+
+h2{
+  text-align:center;
+  color:#0a7c5a;
+}
+
+p{
+  text-align:center;
+  line-height:1.5;
+}
+
+input, textarea{
+  width:100%;
+  padding:10px;
+  margin-top:10px;
+  border-radius:8px;
+  border:1px solid #ccc;
+}
+
+button{
+  width:100%;
+  padding:12px;
+  margin-top:15px;
+  border:none;
+  border-radius:10px;
+  background:#0a7c5a;
+  color:white;
+  font-size:16px;
+}
+
+button:hover{
+  opacity:0.9;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>🤝 Mitra Usaha</h2>
+
+<p>
+Mari bergabung menjadi Mitra Usaha DPD TESPOIN Majalengka.<br>
+Kami membuka peluang kerja sama jual beli produk, jasa servis,
+sparepart, dan aksesoris HP.
+</p>
+
+<form onsubmit="kirimWA(); return false;">
+
+<input id="nama" type="text" placeholder="Nama Lengkap" required>
+<input id="usaha" type="text" placeholder="Nama Usaha" required>
+<input id="hp" type="number" placeholder="Nomor WhatsApp" required>
+
+<textarea id="alamat" placeholder="Alamat Usaha"></textarea>
+
+<button type="submit">Daftar Mitra</button>
+
+</form>
+
+</div>
+
+<script>
+function kirimWA(){
+
+var nama = document.getElementById("nama").value;
+var usaha = document.getElementById("usaha").value;
+var hp = document.getElementById("hp").value;
+var alamat = document.getElementById("alamat").value;
+
+// ganti nomor WA admin di bawah ini
+var admin = "6281234567890";
+
+var text =
+"DAFTAR MITRA USAHA%0A%0A"+
+"Nama: "+nama+"%0A"+
+"Usaha: "+usaha+"%0A"+
+"HP: "+hp+"%0A"+
+"Alamat: "+alamat;
+
+window.open("https://wa.me/"+admin+"?text="+text);
+
+}
+</script>
+
+</body>
+</html>
