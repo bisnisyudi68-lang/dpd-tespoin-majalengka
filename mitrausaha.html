@@ -80,7 +80,11 @@ sparepart, dan aksesoris HP.
 <button type="submit">Daftar Mitra</button>
 
 </form>
+<hr>
 
+<h3 style="text-align:center">📋 Data Mitra Usaha</h3>
+
+<div id="tabelmitra"></div>
 </div>
 
 <script>
@@ -105,6 +109,33 @@ window.open("https://wa.me/"+admin+"?text="+text);
 
 }
 </script>
+<script src="https://www.gstatic.com/charts/loader.js"></script>
 
+<script>
+google.charts.load('current', {'packages':['table']});
+google.charts.setOnLoadCallback(loadData);
+
+function loadData(){
+  var query = new google.visualization.Query(
+    'https://docs.google.com/spreadsheets/d/19AfachAS9ZyNuut61RB1wqyI_AI6BsmNT1SIWhmSIn8/gviz/tq?sheet=DATA MITRA USAHA'
+  );
+
+  query.send(drawTable);
+}
+
+function drawTable(response){
+  var data = response.getDataTable();
+
+  var table = new google.visualization.Table(document.getElementById('tabelmitra'));
+
+  table.draw(data, {
+    showRowNumber:true,
+    width:'100%'
+  });
+}
+</script>
+
+</body>
+</html>
 </body>
 </html>
