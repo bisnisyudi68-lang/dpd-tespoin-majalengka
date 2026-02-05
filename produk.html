@@ -276,5 +276,22 @@ function pilihWA() {
   }
 }
 </script>
+<script>
+fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vS2JyZr-bsO2BKp3_GF5fO5D7bAcrywXQh7owph8Ng7LZxawQKwnw8Q57S5O-BvweUcW_FoqAIoavSL/pub?gid=0&single=true&output=csv")
+.then(r => r.text())
+.then(t => {
+  let rows = t.trim().split("\n");
+  let saldo = "";
+  for (let i = rows.length-1; i >= 1; i--) {
+    let cols = rows[i].split(",");
+    if (cols[3]) { saldo = cols[3]; break; }
+  }
+
+  saldo = saldo.replace(/[^0-9]/g,"");
+
+  document.getElementById("saldo").innerText =
+    "Rp " + Number(saldo).toLocaleString("id-ID");
+});
+</script>
 </body>
 </html>
