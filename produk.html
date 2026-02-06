@@ -203,5 +203,34 @@ fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vS2JyZr-bsO2BKp3_GF5fO5D7
     "Rp " + Number(saldo).toLocaleString("id-ID");
 });
 </script>
+<script>
+/* SET WAKTU MULAI (ubah tanggal saat produk diaktifkan) */
+const startTime = new Date("2026-02-06T00:00:00").getTime();
+
+/* 7 hari dalam milidetik */
+const duration = 7 * 24 * 60 * 60 * 1000;
+
+function updateCountdown() {
+  const now = new Date().getTime();
+  const endTime = startTime + duration;
+  const distance = endTime - now;
+
+  if (distance <= 0) {
+    document.getElementById("memberCountdown").innerHTML = "⛔ Masa member habis";
+    return;
+  }
+
+  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  document.getElementById("memberCountdown").innerHTML =
+    "⏳ Sisa waktu: " + days + " hari " + hours + " jam " + minutes + " menit " + seconds + " detik";
+}
+
+setInterval(updateCountdown, 1000);
+updateCountdown();
+</script>
 </body>
 </html>
