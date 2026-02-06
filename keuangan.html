@@ -19,21 +19,20 @@
 const sheetId = "1TNhwC9WaZza1MXvIKqUYjk4PgliSDKfRQgh6WfV4-o0";
 const sheetName = "SALDO";
 
-fetch(`https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${sheetName}`)
+fetch(`https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?sheet=${sheetName}`)
 .then(r => r.text())
 .then(t => {
 
-  let rows = t.trim().split("\n");
+  const json = JSON.parse(t.substring(47).slice(0,-2));
+  const rows = json.table.rows;
 
   let saldo = 0;
 
-  // ambil dari bawah (baris terakhir)
-  for(let i = rows.length-1; i >= 1; i--){
-    let cols = rows[i].split(",");
-    let v = cols[4]; // kolom E
-
+  // ambil kolom E baris terakhir yg ada isi
+  for(let i = rows.length-1; i >= 0; i--){
+    let v = rows[i].c[4]?.v;
     if(v){
-      saldo = v.replace(/[^0-9]/g,"");
+      saldo = v;
       break;
     }
   }
