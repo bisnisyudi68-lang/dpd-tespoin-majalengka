@@ -31,9 +31,7 @@ fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vS2JyZr-bsO2BKp3_GF5fO5D7
   let saldo = "";
   for (let i = rows.length-1; i >= 1; i--) {
     let cols = rows[i].split(",");
-    if (cols[3]) { saldo = cols[3]; break; }
-  }
-
+    if (cols[4]) { saldo = cols[4]; break; }
   saldo = saldo.replace(/[^0-9]/g,"");
 
   document.getElementById("saldo").innerText =
