@@ -3,42 +3,77 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Saldo Rekening Bersama</title>
-
+<title>Data Keuangan</title>
 <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+<body class="bg-gray-100">
 
-<div class="bg-white shadow-xl rounded-xl p-8 text-center">
-  <h2 class="text-xl font-semibold mb-2">Saldo Rekening Bersama</h2>
-  <p id="saldo" class="text-4xl font-bold text-green-600">Memuat...</p>
+<header class="bg-blue-800 text-white text-center p-4">
+<h2 class="text-xl font-bold">A-Yudi-Thea</h2>
+<p>Data Keuangan</p>
+</header>
+
+<div class="max-w-4xl mx-auto p-4">
+
+<h3 class="text-lg font-semibold mb-3">📒 Data Saldo</h3>
+
+<div class="bg-white rounded shadow p-4 mb-4 text-center">
+<p class="text-sm">Saldo Rekening Bersama</p>
+<p id="saldoAkhir" class="text-3xl font-bold text-green-600">Memuat…</p>
+</div>
+
+<div class="overflow-x-auto bg-white rounded shadow">
+<table class="w-full text-sm">
+<thead class="bg-blue-700 text-white">
+<tr>
+<th class="p-2">Tanggal</th>
+<th class="p-2">Keterangan</th>
+<th class="p-2">Masuk</th>
+<th class="p-2">Keluar</th>
+<th class="p-2">Saldo</th>
+</tr>
+</thead>
+<tbody id="saldoTabel"></tbody>
+</table>
+</div>
+
 </div>
 
 <script>
-const sheetId = "1TNhwC9WaZza1MXvIKqUYjk4PgliSDKfRQgh6WfV4-o0";
-const sheetName = "SALDO";
+const sheetId="1TNhwC9WaZza1MXvIKqUYjk4PgliSDKfRQgh6WfV4-o0";
+const tabSaldo="SALDO";
 
-fetch(`https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?sheet=${sheetName}`)
-.then(r => r.text())
-.then(t => {
+fetch(`https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?sheet=${tabSaldo}`)
+.then(r=>r.text())
+.then(t=>{
+const json=JSON.parse(t.substring(47).slice(0,-2));
+const rows=json.table.rows;
 
-  const json = JSON.parse(t.substring(47).slice(0,-2));
-  const rows = json.table.rows;
+let html="";
+let saldoAkhir=0;
 
-  let saldo = 0;
+rows.forEach(r=>{
+let tgl=r.c[0]?.v||"";
+let ket=r.c[1]?.v||"";
+let masuk=r.c[2]?.v||0;
+let keluar=r.c[3]?.v||0;
+let saldo=r.c[4]?.v||0;
 
-  // ambil kolom E baris terakhir yg ada isi
-  for(let i = rows.length-1; i >= 0; i--){
-    let v = rows[i].c[4]?.v;
-    if(v){
-      saldo = v;
-      break;
-    }
-  }
+if(saldo) saldoAkhir=saldo;
 
-  document.getElementById("saldo").innerText =
-    "Rp " + Number(saldo).toLocaleString("id-ID");
+html+=`
+<tr class="border-b">
+<td class="p-2">${tgl}</td>
+<td class="p-2">${ket}</td>
+<td class="p-2">Rp ${Number(masuk).toLocaleString()}</td>
+<td class="p-2">Rp ${Number(keluar).toLocaleString()}</td>
+<td class="p-2 font-bold">Rp ${Number(saldo).toLocaleString()}</td>
+</tr>`;
+});
+
+saldoTabel.innerHTML=html;
+saldoAkhir.innerText="Rp "+Number(saldoAkhir).toLocaleString("id-ID");
 
 });
 </script>
