@@ -99,9 +99,7 @@ Tulis Pesanan
 <!-- PRODUK MEMBER -->
 <h2 class="text-4xl font-bold mt-6 mb-6 text-orange-600">
 🟡 Produk Member (7 Hari)
-<div id="memberCountdown" style="text-align:center;color:red;font-weight:bold;margin-bottom:10px;">
-⏳ Menghitung waktu...
-</div>
+<div class="product-card" data-upload="2026-02-06T20:00:00">
 
  <div class="max-w-6xl mx-auto px-4 py-10">
     <h3 class="text-2xl font-bold mb-6">
@@ -142,8 +140,8 @@ if(!img) img = "";
 img = img.replace(/"/g,"").trim();
 
     box.innerHTML+=`
-    <div class="bg-white rounded shadow p-2">
-
+<div class="product-card bg-white rounded shadow p-2" data-upload="${c[11]}">
+<div class="member-timer"></div>
 <button onclick="window.open('${img}','_blank')"
 class="block w-full text-blue-600 underline font-bold text-base mt-2 text-left">
 Lihat Foto Produk
@@ -207,36 +205,38 @@ fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vS2JyZr-bsO2BKp3_GF5fO5D7
 });
 </script>
 <script>
-let start = localStorage.getItem("memberStart");
+const duration = 7*24*60*60*1000;
 
-if (!start) {
-  start = new Date().getTime();
-  localStorage.setItem("memberStart", start);
+function updateMemberTimers(){
+ document.querySelectorAll('.product-card').forEach(card=>{
+
+   const upload = card.dataset.upload;
+   if(!upload) return;
+
+   const start = new Date(upload).getTime();
+   const now = new Date().getTime();
+   const diff = start + duration - now;
+
+   if(diff<=0){
+     card.remove(); // PRODUK HILANG
+     return;
+   }
+
+   const d=Math.floor(diff/(1000*60*60*24));
+   const h=Math.floor(diff%(1000*60*60*24)/(1000*60*60));
+   const m=Math.floor(diff%(1000*60*60)/(1000*60));
+   const s=Math.floor(diff%(1000*60)/1000);
+
+   const timer = card.querySelector(".member-timer");
+   if(timer){
+     timer.innerHTML=`⏳ ${d}h ${h}j ${m}m ${s}d`;
+   }
+
+ });
 }
 
-const duration = 7 * 24 * 60 * 60 * 1000;
-
-function runCountdown() {
-  const now = new Date().getTime();
-  const end = parseInt(start) + duration;
-  const diff = end - now;
-
-  if (diff <= 0) {
-    document.getElementById("memberCountdown").innerHTML = "⛔ Masa member habis";
-    return;
-  }
-
-  const d = Math.floor(diff / (1000*60*60*24));
-  const h = Math.floor((diff % (1000*60*60*24))/(1000*60*60));
-  const m = Math.floor((diff % (1000*60*60))/(1000*60));
-  const s = Math.floor((diff % (1000*60))/1000);
-
-  document.getElementById("memberCountdown").innerHTML =
-   "⏳ Sisa: "+d+" hari "+h+" jam "+m+" menit "+s+" detik";
-}
-
-setInterval(runCountdown,1000);
-runCountdown();
+setInterval(updateMemberTimers,1000);
+updateMemberTimers();
 </script>
 </body>
 </html>
