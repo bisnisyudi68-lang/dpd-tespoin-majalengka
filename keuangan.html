@@ -53,25 +53,30 @@ const rows=json.table.rows;
 let html="";
 let saldoAkhir=0;
 
-rows.forEach(r=>{
-let tgl=r.c[0]?.v||"";
-let ket=r.c[1]?.v||"";
-let masuk=r.c[2]?.v||0;
-let keluar=r.c[3]?.v||0;
-let saldo=r.c[4]?.v||0;
+for(let i=0;i<rows.length;i++){
+  let r=rows[i];
 
-if(saldo) saldoAkhir=saldo;
+  let tgl=r.c[0]?.v||"";
+  let ket=r.c[1]?.v||"";
+  let masuk=r.c[2]?.v||0;
+  let keluar=r.c[3]?.v||0;
+  let saldo=r.c[4]?.v;
 
-html+=`
+  // skip baris benar2 kosong
+  if(!tgl && !ket && !masuk && !keluar && !saldo) continue;
+
+  // simpan saldo TERAKHIR
+  if(saldo!==null && saldo!==undefined) saldoAkhir=saldo;
+
+  html+=`
 <tr class="border-b">
 <td class="p-2">${tgl}</td>
 <td class="p-2">${ket}</td>
 <td class="p-2">Rp ${Number(masuk).toLocaleString()}</td>
 <td class="p-2">Rp ${Number(keluar).toLocaleString()}</td>
-<td class="p-2 font-bold">Rp ${Number(saldo).toLocaleString()}</td>
+<td class="p-2 font-bold">Rp ${Number(saldo||0).toLocaleString()}</td>
 </tr>`;
-});
-
+}
 saldoTabel.innerHTML=html;
 saldoAkhir.innerText="Rp "+Number(saldoAkhir).toLocaleString("id-ID");
 
