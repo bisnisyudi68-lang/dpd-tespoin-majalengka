@@ -60,8 +60,6 @@ let masuk=r.c[2]?.v||0;
 let keluar=r.c[3]?.v||0;
 let saldo=r.c[4]?.v||0;
 
-// 👉 skip baris kosong / nol
-if(!tgl && !ket && !masuk && !keluar && !saldo) return;
 if(saldo) saldoAkhir=saldo;
 
 html+=`
@@ -75,8 +73,9 @@ html+=`
 });
 
 saldoTabel.innerHTML=html;
-document.getElementById("saldo").innerText =
-"Rp " + Number(saldoAkhir).toLocaleString("id-ID");
+saldoAkhir.innerText="Rp "+Number(saldoAkhir).toLocaleString("id-ID");
+
+});
 </script>
 
 </body>
