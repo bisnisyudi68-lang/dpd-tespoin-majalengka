@@ -41,45 +41,47 @@
 </div>
 
 <script>
-const sheetId="1TNhwC9WaZza1MXvIKqUYjk4PgliSDKfRQgh6WfV4-o0";
-const tabSaldo="SALDO";
+const sheetId = "1TNhwC9WaZza1MXvIKqUYjk4PgliSDKfRQgh6WfV4-o0";
+const sheetName = "SALDO";
 
-fetch(`https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?sheet=${tabSaldo}`)
-.then(r=>r.text())
-.then(t=>{
-const json=JSON.parse(t.substring(47).slice(0,-2));
-const rows=json.table.rows;
+fetch(`https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?sheet=${sheetName}`)
+.then(res => res.text())
+.then(text => {
+  const data = JSON.parse(text.substring(47).slice(0,-2));
+  const rows = data.table.rows;
 
-let html="";
-let saldoAkhir=0;
+  let html = "";
+  let saldoTerakhir = 0;
 
-for(let i=0;i<rows.length;i++){
-  let r=rows[i];
+  rows.forEach(r => {
+    const tgl = r.c[0]?.v || "";
+    const ket = r.c[1]?.v || "";
+    const masuk = Number(r.c[2]?.v || 0);
+    const keluar = Number(r.c[3]?.v || 0);
+    const saldo = r.c[4]?.v;
 
-  let tgl=r.c[0]?.v||"";
-  let ket=r.c[1]?.v||"";
-  let masuk=r.c[2]?.v||0;
-  let keluar=r.c[3]?.v||0;
-  let saldo=r.c[4]?.v;
+    // skip baris kosong
+    if(!tgl && !ket && masuk===0 && keluar===0 && !saldo) return;
 
-  // skip baris benar2 kosong
-  if(!tgl && !ket && !masuk && !keluar && !saldo) continue;
+    if(saldo !== null && saldo !== undefined) saldoTerakhir = saldo;
 
-  // simpan saldo TERAKHIR
-  if(saldo!==null && saldo!==undefined) saldoAkhir=saldo;
+    html += `
+      <tr class="border-b">
+        <td class="p-2">${tgl}</td>
+        <td class="p-2">${ket}</td>
+        <td class="p-2">Rp ${masuk.toLocaleString("id-ID")}</td>
+        <td class="p-2">Rp ${keluar.toLocaleString("id-ID")}</td>
+        <td class="p-2 font-bold">Rp ${(saldo||0).toLocaleString("id-ID")}</td>
+      </tr>`;
+  });
 
-  html+=`
-<tr class="border-b">
-<td class="p-2">${tgl}</td>
-<td class="p-2">${ket}</td>
-<td class="p-2">Rp ${Number(masuk).toLocaleString()}</td>
-<td class="p-2">Rp ${Number(keluar).toLocaleString()}</td>
-<td class="p-2 font-bold">Rp ${Number(saldo||0).toLocaleString()}</td>
-</tr>`;
-}
-saldoTabel.innerHTML=html;
-saldoAkhir.innerText="Rp "+Number(saldoAkhir).toLocaleString("id-ID");
-
+  document.getElementById("saldoTabel").innerHTML = html;
+  document.getElementById("saldoAkhir").innerText =
+    "Rp " + Number(saldoTerakhir).toLocaleString("id-ID");
+})
+.catch(err=>{
+  document.getElementById("saldoAkhir").innerText="Gagal ambil data";
+  console.error(err);
 });
 </script>
 
