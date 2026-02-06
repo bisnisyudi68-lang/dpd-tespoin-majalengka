@@ -22,31 +22,30 @@ Memuat...
 </div>
 
 <script>
-const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQpN9mTt3ZC0g8o5oKzJwA7qF9P0n5s9q0l9wQ2K4n0b8UQnH2xXy6QwW8f7n9uGJ/pub?gid=0&single=true&output=csv";
+const url="https://docs.google.com/spreadsheets/d/e/2PACX-1vQpN9mTt3ZC0g8o5oKzJwA7qF9P0n5s9q0l9wQ2K4n0b8UQnH2xXy6QwW8f7n9uGJ/pub?gid=0&single=true&output=csv";
 
 fetch(url)
 .then(r=>r.text())
 .then(t=>{
 
-  let rows = t.trim().split("\n");
-  let saldo = 0;
+  let rows=t.trim().split(/\r?\n/);
+  let saldo=0;
 
   for(let i=rows.length-1;i>0;i--){
-    let cols = rows[i].split(",");
+    let cols=rows[i].split(",");
 
-    if(cols[4]){
-      saldo = cols[4];
+    if(cols[4] && cols[4].trim()!=""){
+      saldo=cols[4];
       break;
     }
   }
 
-  saldo = saldo.replace(/[^0-9]/g,"");
+  saldo=saldo.replace(/[^0-9]/g,"");
 
-  document.getElementById("saldo").innerText =
-    "Rp " + Number(saldo).toLocaleString("id-ID");
+  document.getElementById("saldo").innerHTML=
+   "Rp "+Number(saldo).toLocaleString("id-ID");
 
 });
 </script>
-
 </body>
 </html>
