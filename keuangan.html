@@ -22,29 +22,28 @@ Memuat...
 </div>
 
 <script>
-const url="https://docs.google.com/spreadsheets/d/e/2PACX-1vQpN9mTt3ZC0g8o5oKzJwA7qF9P0n5s9q0l9wQ2K4n0b8UQnH2xXy6QwW8f7n9uGJ/pub?gid=0&single=true&output=csv";
+const sheetId="1TNhwC9WaZza1MXvIKqUYjk4PgliSDKfRQgh6WfV4-o0";
+const tabSaldo="SALDO";
 
-fetch(url)
+fetch(`https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?sheet=${encodeURIComponent(tabSaldo)}`)
 .then(r=>r.text())
 .then(t=>{
+  const json=JSON.parse(t.substring(47).slice(0,-2));
+  const rows=json.table.rows;
 
-  let rows=t.trim().split(/\r?\n/);
   let saldo=0;
 
-  for(let i=rows.length-1;i>0;i--){
-    let cols=rows[i].split(",");
+  for(let i=rows.length-1;i>=0;i--){
+    let v=rows[i].c[4]?.v;   // kolom E
 
-    if(cols[4] && cols[4].trim()!=""){
-      saldo=cols[4];
+    if(v){
+      saldo=v;
       break;
     }
   }
 
-  saldo=saldo.replace(/[^0-9]/g,"");
-
-  document.getElementById("saldo").innerHTML=
+  document.getElementById("saldo").innerText =
    "Rp "+Number(saldo).toLocaleString("id-ID");
-
 });
 </script>
 </body>
