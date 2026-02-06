@@ -97,8 +97,11 @@ Tulis Pesanan
 </div>
 
 <!-- PRODUK MEMBER -->
-<h2 class="text-4xl font-bold mt-6 mb-6 text-orange-600">🟡 Produk Member (7 Hari)</h2>
-
+<h2 class="text-4xl font-bold mt-6 mb-6 text-orange-600">
+🟡 Produk Member (7 Hari)
+<div id="memberCountdown" style="text-align:center;color:red;font-weight:bold;margin-bottom:10px;">
+⏳ Menghitung waktu...
+</div>
 
  <div class="max-w-6xl mx-auto px-4 py-10">
     <h3 class="text-2xl font-bold mb-6">
@@ -204,33 +207,36 @@ fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vS2JyZr-bsO2BKp3_GF5fO5D7
 });
 </script>
 <script>
-/* SET WAKTU MULAI (ubah tanggal saat produk diaktifkan) */
-const startTime = new Date("2026-02-06T00:00:00").getTime();
+let start = localStorage.getItem("memberStart");
 
-/* 7 hari dalam milidetik */
+if (!start) {
+  start = new Date().getTime();
+  localStorage.setItem("memberStart", start);
+}
+
 const duration = 7 * 24 * 60 * 60 * 1000;
 
-function updateCountdown() {
+function runCountdown() {
   const now = new Date().getTime();
-  const endTime = startTime + duration;
-  const distance = endTime - now;
+  const end = parseInt(start) + duration;
+  const diff = end - now;
 
-  if (distance <= 0) {
+  if (diff <= 0) {
     document.getElementById("memberCountdown").innerHTML = "⛔ Masa member habis";
     return;
   }
 
-  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  const d = Math.floor(diff / (1000*60*60*24));
+  const h = Math.floor((diff % (1000*60*60*24))/(1000*60*60));
+  const m = Math.floor((diff % (1000*60*60))/(1000*60));
+  const s = Math.floor((diff % (1000*60))/1000);
 
   document.getElementById("memberCountdown").innerHTML =
-    "⏳ Sisa waktu: " + days + " hari " + hours + " jam " + minutes + " menit " + seconds + " detik";
+   "⏳ Sisa: "+d+" hari "+h+" jam "+m+" menit "+s+" detik";
 }
 
-setInterval(updateCountdown, 1000);
-updateCountdown();
+setInterval(runCountdown,1000);
+runCountdown();
 </script>
 </body>
 </html>
