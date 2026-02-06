@@ -76,9 +76,8 @@ html+=`
 });
 
 saldoTabel.innerHTML=html;
-saldoAkhir.innerText="Rp "+Number(saldoAkhir).toLocaleString("id-ID");
-
-});
+document.getElementById("saldo").innerText =
+"Rp " + Number(saldoAkhir).toLocaleString("id-ID");
 </script>
 
 </body>
