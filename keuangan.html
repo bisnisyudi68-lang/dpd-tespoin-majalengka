@@ -1,42 +1,52 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Produk DPD TESPOIN Majalengka</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Saldo Rekening</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
+<body class="bg-gray-100">
 
-</section> <section id="produk" class="bg-white">
-  <div class="max-w-6xl mx-auto px-4 py-10">
-    <h3 class="text-2xl font-bold mb-6">
+<div class="max-w-md mx-auto mt-10 bg-white rounded-xl shadow p-6 text-center">
 
-Demi transparansi dan kerapihan administrasi, seluruh transaksi mohon dilakukan melalui rekening bersama DPD TESPOIN Majalengka.<br><br>
-Saldo Rekening Bersama</h2>
-<div>
-  <p id="saldo" class="text-2xl font-bold text-green-600">Memuat...</p>
-</section> <section id="produk" class="bg-white">
-    
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<h2 class="text-2xl font-bold mb-4">Saldo Rekening Bersama</h2>
+
+<p id="saldo" class="text-3xl font-bold text-green-600">
+Memuat...
+</p>
+
 </div>
 
 <script>
-fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vS2JyZr-bsO2BKp3_GF5fO5D7bAcrywXQh7owph8Ng7LZxawQKwnw8Q57S5O-BvweUcW_FoqAIoavSL/pub?gid=0&single=true&output=csv")
-.then(r => r.text())
-.then(t => {
+const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQpN9mTt3ZC0g8o5oKzJwA7qF9P0n5s9q0l9wQ2K4n0b8UQnH2xXy6QwW8f7n9uGJ/pub?gid=0&single=true&output=csv";
+
+fetch(url)
+.then(r=>r.text())
+.then(t=>{
+
   let rows = t.trim().split("\n");
-  let saldo = "";
-  for (let i = rows.length-1; i >= 1; i--) {
+  let saldo = 0;
+
+  for(let i=rows.length-1;i>0;i--){
     let cols = rows[i].split(",");
-    if (cols[4]) { saldo = cols[4]; break; }
+
+    if(cols[4]){
+      saldo = cols[4];
+      break;
+    }
+  }
+
   saldo = saldo.replace(/[^0-9]/g,"");
 
   document.getElementById("saldo").innerText =
     "Rp " + Number(saldo).toLocaleString("id-ID");
+
 });
 </script>
+
 </body>
 </html>
