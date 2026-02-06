@@ -60,6 +60,9 @@ let masuk=r.c[2]?.v||0;
 let keluar=r.c[3]?.v||0;
 let saldo=r.c[4]?.v||0;
 
+// 👉 skip baris kosong / nol
+if(masuk==0 && keluar==0 && saldo==0) return;
+
 if(saldo) saldoAkhir=saldo;
 
 html+=`
