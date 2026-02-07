@@ -209,35 +209,47 @@ fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vS2JyZr-bsO2BKp3_GF5fO5D7
 const duration = 7 * 24 * 60 * 60 * 1000; // 7 hari
 
 function updateMemberTimers(){
-document.querySelectorAll('.product-card').forEach(card=>{
+  document.querySelectorAll('.product-card').forEach(card => {
 
-const upload = card.dataset.upload;
-if(!upload) return;
+    const upload = card.dataset.upload;
+    if(!upload) return;
 
-const start = new Date(upload).getTime();
-const now = new Date().getTime();
-const diff = start + duration - now;
+    const start = new Date(upload).getTime();
+    const now = new Date().getTime();
+    const diff = start + duration - now;
 
-if(diff<=0){
-card.remove();
-return;
-}
+    // kalau sudah habis → hapus produk
+    if(diff <= 0){
+      card.remove();
+      return;
+    }
 
-const d = Math.floor(diff / (1000*60*60*24));
-const h = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
-const m = Math.floor((diff % (1000*60*60)) / (1000*60));
-const s = Math.floor((diff % (1000*60)) / 1000);
+    const d = Math.floor(diff / (1000*60*60*24));
+    const h = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
 
-const timer = card.querySelector(".member-timer");
-if(timer){
-timer.innerHTML=`⏳ ${d}h ${h}j ${m}m ${s}d`;
-}
+    const timer = card.querySelector(".member-timer");
+    if(timer){
+      let teks = "⏳ Sisa ";
 
-});
+      if(d > 0) teks += `${d} hari `;
+      if(h > 0) teks += `${h} jam`;
+
+      // default warna (oranye)
+      timer.className = "member-timer text-xs font-semibold mb-1 text-orange-600";
+
+      // 🔴 merah kalau sisa 1 hari atau kurang
+      if(d <= 1){
+        timer.className = "member-timer text-xs font-semibold mb-1 text-red-600";
+      }
+
+      timer.innerText = teks.trim();
+    }
+
+  });
 }
 
 updateMemberTimers();
-setInterval(updateMemberTimers,1000);
+setInterval(updateMemberTimers, 1000);
 </script>
 
 </body>
