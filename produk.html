@@ -133,11 +133,10 @@ if (harga > 0 && harga < 1000) {
          data-upload="${upload}">
       <div class="member-timer text-xs font-semibold mb-1"></div>
 
-      <button onclick="window.open('${img}','_blank')"
-        class="block w-full text-blue-600 underline font-bold text-left">
-        Lihat Foto Produk
-      </button>
-
+      <a href="${img}" target="_blank"
+  class="block w-full text-blue-600 underline font-bold text-left">
+  Lihat Foto Produk
+</a>
       <h3 class="text-lg font-bold mt-2">${nama}</h3>
       <p class="text-xs text-gray-600 mt-1">${deskripsi}</p>
       <p class="text-xs text-gray-500 mt-1">📍 ${lokasi}</p>
