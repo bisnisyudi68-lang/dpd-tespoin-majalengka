@@ -126,33 +126,42 @@ if (harga > 0 && harga < 1000) {
   harga = harga * 1000;
 }
     const wa = (c[8] || "").replace(/[^0-9]/g,"");
-    let img = (c[9] || "").replace(/"/g,"");
+    let img = (c[9] || "").replace(/"/g,"").trim();
 
-    box.innerHTML += `
-  <div class="member-item search-item bg-white rounded shadow p-3"
-         data-upload="${upload}">
-      <div class="member-timer text-xs font-semibold mb-1"></div>
+// validasi link foto
+let fotoBtn = "";
+if (img.startsWith("http")) {
+  fotoBtn = `
+    <a href="${img}" target="_blank"
+      class="block w-full text-blue-600 underline font-bold text-left">
+      Lihat Foto Produk
+    </a>
+  `;
+}
 
-      <a href="${img}" target="_blank"
-  class="block w-full text-blue-600 underline font-bold text-left">
-  Lihat Foto Produk
-</a>
-      <h3 class="text-lg font-bold mt-2">${nama}</h3>
-      <p class="text-xs text-gray-600 mt-1">${deskripsi}</p>
-      <p class="text-xs text-gray-500 mt-1">📍 ${lokasi}</p>
+box.innerHTML += `
+<div class="member-item search-item bg-white rounded shadow p-3"
+     data-upload="${upload}">
+  <div class="member-timer text-xs font-semibold mb-1"></div>
 
-      <p class="text-green-600 font-bold mt-1">
-        Rp ${harga.toLocaleString("id-ID")}
-      </p>
+  ${fotoBtn}
 
-      <a href="https://wa.me/${wa}?text=${encodeURIComponent(
-        'Halo kak, saya mau tanya produk ' + nama + ', apakah masih ada?'
-      )}"
-      target="_blank"
-      class="block bg-green-600 hover:bg-green-700 text-white text-center py-2 rounded mt-2">
-        WhatsApp Penjual
-      </a>
-    </div>`;
+  <h3 class="text-lg font-bold mt-2">${nama}</h3>
+  <p class="text-xs text-gray-600 mt-1">${deskripsi}</p>
+  <p class="text-xs text-gray-500 mt-1">📍 ${lokasi}</p>
+
+  <p class="text-green-600 font-bold mt-1">
+    Rp ${harga.toLocaleString("id-ID")}
+  </p>
+
+  <a href="https://wa.me/${wa}?text=${encodeURIComponent(
+    "Halo kak, saya mau tanya produk " + nama + ", apakah masih ada?"
+  )}"
+  target="_blank"
+  class="block bg-green-600 hover:bg-green-700 text-white text-center py-2 rounded mt-2">
+    WhatsApp Penjual
+  </a>
+</div>`;
   });
 
   updateMemberTimers();
