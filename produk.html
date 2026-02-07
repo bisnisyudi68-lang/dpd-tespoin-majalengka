@@ -229,38 +229,16 @@ const m = Math.floor((diff % (1000*60*60)) / (1000*60));
 const s = Math.floor((diff % (1000*60)) / 1000);
 
 const timer = card.querySelector(".member-timer");
-if (timer) {
-  let teks = "⏳ Sisa ";
-
-  if (d > 0) {
-    teks += `${d} hari `;
-  }
-
-  if (h > 0) {
-    teks += `${h} jam`;
-  }
-
-  // fallback kalau hari & jam = 0
-  if (d === 0 && h === 0) {
-    teks += `${m} menit`;
-  }
-
-  // default warna (orange)
-  timer.className =
-    "member-timer text-xs font-semibold mb-1 text-orange-600";
-
-  // 🔴 merah kalau sisa 1 hari atau kurang
-  if (d <= 1) {
-    timer.className =
-      "member-timer text-xs font-semibold mb-1 text-red-600";
-  }
-
-  timer.innerText = teks.trim();
+if(timer){
+timer.innerHTML=`⏳ ${d}h ${h}j ${m}m ${s}d`;
 }
+
+});
+}
+
 updateMemberTimers();
 setInterval(updateMemberTimers,1000);
 </script>
-
 
 </body>
 </html>
