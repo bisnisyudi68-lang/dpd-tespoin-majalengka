@@ -37,7 +37,7 @@ Kami melayani berbagai kebutuhan, mulai dari produk harian hingga perlengkapan u
 <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 px-4">
 
   <!-- MITRA ITEM -->
-  <div class="product-card bg-white rounded-xl shadow p-4 flex flex-col">
+  <div class="product-card search-item bg-white rounded-xl shadow p-4 flex flex-col">
     <img src="IMG_20260204_130958.jpg" class="h-40 object-contain mb-2">
     <p class="text-sm">
       RELIFE RL-530 Contact Cleaner untuk PCB, konektor & port charger.
@@ -129,7 +129,7 @@ if (harga > 0 && harga < 1000) {
     let img = (c[9] || "").replace(/"/g,"");
 
     box.innerHTML += `
-    <div class="member-item bg-white rounded shadow p-3"
+  <div class="member-item search-item bg-white rounded shadow p-3"
          data-upload="${upload}">
       <div class="member-timer text-xs font-semibold mb-1"></div>
 
@@ -183,6 +183,22 @@ function updateMemberTimers(){
     }
   });
 }
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const input = document.getElementById("searchProduk");
+  if(!input) return;
+
+  input.addEventListener("input", function(){
+    const keyword = this.value.toLowerCase().trim();
+    const items = document.querySelectorAll(".search-item");
+
+    items.forEach(item => {
+      const text = item.innerText.toLowerCase();
+      item.style.display = text.includes(keyword) ? "" : "none";
+    });
+  });
+});
 </script>
 </body>
 </html>
