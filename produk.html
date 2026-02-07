@@ -206,19 +206,46 @@ fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vS2JyZr-bsO2BKp3_GF5fO5D7
 });
 </script>
 <script>
-const duration = 7 * 24 * 60 * 60 * 1000; // 7 hari
+/* ===============================
+   SET DURASI PRODUK MEMBER (7 HARI)
+================================= */
+const DURATION = 7 * 24 * 60 * 60 * 1000;
 
+/* ===============================
+   PARSE TANGGAL INDONESIA
+   contoh: 02/02/2026 23:45:18
+================================= */
+function parseTanggalID(t){
+  if(!t) return null;
+  const p = t.split(/[/ :]/);
+  if(p.length < 3) return null;
+
+  return new Date(
+    p[2],        // tahun
+    p[1]-1,      // bulan
+    p[0],        // tanggal
+    p[3] || 0,   // jam
+    p[4] || 0,   // menit
+    p[5] || 0    // detik
+  ).getTime();
+}
+
+/* ===============================
+   UPDATE TIMER PRODUK MEMBER
+================================= */
 function updateMemberTimers(){
   document.querySelectorAll('.product-card').forEach(card => {
 
     const upload = card.dataset.upload;
     if(!upload) return;
 
-    const start = new Date(upload).getTime();
-    const now = new Date().getTime();
-    const diff = start + duration - now;
+    const start = parseTanggalID(upload);
+    if(!start) return;
 
-    // kalau sudah habis → hapus produk
+    const now  = Date.now();
+    const diff = start + DURATION - now;
+
+    // ⛔ waktu habis → hapus produk
     if(diff <= 0){
       card.remove();
       return;
@@ -227,27 +254,27 @@ function updateMemberTimers(){
     const d = Math.floor(diff / (1000*60*60*24));
     const h = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
 
-    const timer = card.querySelector(".member-timer");
+    const timer = card.querySelector('.member-timer');
     if(timer){
-      let teks = "⏳ Sisa ";
-
+      let teks = `⏳ Sisa `;
       if(d > 0) teks += `${d} hari `;
-      if(h > 0) teks += `${h} jam`;
+      teks += `${h} jam`;
 
-      // default warna (oranye)
+      // warna default
       timer.className = "member-timer text-xs font-semibold mb-1 text-orange-600";
 
-      // 🔴 merah kalau sisa 1 hari atau kurang
+      // 🔴 jika sisa 1 hari atau kurang
       if(d <= 1){
         timer.className = "member-timer text-xs font-semibold mb-1 text-red-600";
       }
 
-      timer.innerText = teks.trim();
+      timer.innerText = teks;
     }
 
   });
 }
 
+// jalankan
 updateMemberTimers();
 setInterval(updateMemberTimers, 1000);
 </script>
