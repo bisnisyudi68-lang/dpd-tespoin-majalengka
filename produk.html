@@ -223,21 +223,23 @@ function updateMemberTimers(){
      return;
    }
 
-   const d=Math.floor(diff/(1000*60*60*24));
-   const h=Math.floor(diff%(1000*60*60*24)/(1000*60*60));
-   const m=Math.floor(diff%(1000*60*60)/(1000*60));
-   const s=Math.floor(diff%(1000*60)/1000);
+   const d = Math.floor(diff / (1000*60*60*24));
+const h = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+const m = Math.floor((diff % (1000*60*60)) / (1000*60));
 
-   const timer = card.querySelector(".member-timer");
-   if(timer){
-     timer.innerHTML=`⏳ ${d}h ${h}j ${m}m ${s}d`;
-   }
+const timer = card.querySelector(".member-timer");
+    if(timer){
+    timer.innerHTML=`⏳ Sisa: ${d} hari ${h} jam ${m} menit`;
+}
+});
 
- });
 }
 
-setInterval(updateMemberTimers,1000);
 updateMemberTimers();
+setInterval(updateMemberTimers, 60000);
+
+setInterval(updateMemberTimers, 60000); // update tiap 1 menit
+
 </script>
 </body>
 </html>
