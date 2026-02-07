@@ -99,152 +99,100 @@ Tulis Pesanan
 <!-- PRODUK MEMBER -->
 <h2 class="text-4xl font-bold mt-6 mb-6 text-orange-600">
 🟡 Produk Member (7 Hari)
+</h2>
 
- <div class="max-w-6xl mx-auto px-4 py-10">
-    <h3 class="text-2xl font-bold mb-6">
-      🤝 Jual Produk Anda Bersama Kami<br>
-Anda juga dapat memasukkan produk jualan Anda di sini untuk dijual.
-Punya barang atau usaha sendiri? Daftarkan produk Anda, dan biarkan kami membantu memasarkannya.
-</p>
-<a href="https://forms.gle/iCPE6H5YbxjWzkpN9"
-target="_blank"
-class="block text-center mt-3 bg-green-500 hover:bg-green-600 text-white py-3 px-4 rounded-xl font-semibold">
-➕ Upload Produk Anda Di Sini
-</a>
-<div id="produkMember" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
-<a href="index.html" class="block text-center text-blue-600 mt-6">← Kembali ke Beranda</a>
+<div class="max-w-6xl mx-auto px-4 py-10">
+
+  <h3 class="text-2xl font-bold mb-3">
+    🤝 Jual Produk Anda Bersama Kami
+  </h3>
+
+  <p class="mb-4 text-gray-700">
+    Anda juga dapat memasukkan produk jualan Anda di sini untuk dijual.
+    Punya barang atau usaha sendiri? Daftarkan produk Anda, dan biarkan kami membantu memasarkannya.
+  </p>
+
+  <a href="https://forms.gle/iCPE6H5YbxjWzkpN9"
+     target="_blank"
+     class="block text-center mb-6 bg-green-500 hover:bg-green-600 text-white py-3 px-4 rounded-xl font-semibold">
+    ➕ Upload Produk Anda Di Sini
+  </a>
+
+  <!-- GRID PRODUK MEMBER -->
+  <div id="produkMember" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+
+  <a href="index.html" class="block text-center text-blue-600 mt-6">
+    ← Kembali ke Beranda
+  </a>
 
 </div>
 <script>
 const sheetUrl = "https://docs.google.com/spreadsheets/d/19AfachAS9ZyNuut61RB1wqyI_AI6BsmNT1SIWhmSIn8/export?format=csv&gid=833555455";
+const DURATION = 7 * 24 * 60 * 60 * 1000; // 7 hari
 
-fetch(sheetUrl)
-.then(r=>r.text())
-.then(t=>{
-  const rows=t.trim().split(/\r?\n/).slice(1);
-  const box = document.getElementById("produkMember");
-
-  rows.forEach(r=>{
-  const c = r.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/);
-
-  if(!c[1] || !c[6] || !c[7]) return;
-const upload    = c[0];  // Timestamp (A)
-const nama = c[1];
-const deskripsi = c[2];
-const lokasi = c[10]; // kolom K alamat_fix
-const harga = c[7];
-const wa = c[8].replace(/[^0-9]/g,"").trim();
-let img = c[9]; // kolom I Foto.fix
-if(!img) img = "";
-img = img.replace(/"/g,"").trim();
-
-    box.innerHTML+=`
-<<div class="product-card bg-white rounded shadow p-2"
-     data-upload="${upload}">
-  <div class="member-timer text-xs text-orange-600 font-semibold mb-1"></div>
-<button onclick="window.open('${img}','_blank')"
-class="block w-full text-blue-600 underline font-bold text-base mt-2 text-left">
-Lihat Foto Produk
-</button>
-
-      <h3 class="text-lg font-bold mt-2">${nama}</h3>
-
-<p class="text-xs text-gray-600 mt-1">${deskripsi}</p>
-
-<p class="text-xs text-gray-500 mt-1">
-📍 ${lokasi}
-</p>
-
-      <p class="text-green-600 font-bold mt-1">
-Rp&nbsp;${harga}
-</p>
-
-      <a href="https://wa.me/${wa}?text=${encodeURIComponent('Halo kak, saya mau tanya produk ' + nama + ', apakah sudah laku?')}"
-target="_blank"
-class="block bg-green-600 hover:bg-green-700 text-white text-center py-2 rounded mt-2">
-WhatsApp Penjual
-</a>
-
-    </div>
-    `;
-  });
-});
-</script>
-<script>
-function pilihWA() {
-  let p = prompt(
-    "Siapa yang mau anda hubungi? Tulis angka nya 1 2 atau 3:\n1 = Admin\n2 = pengelola\n3 = karyawan"
-  );
-
-  if (p == "1") {
-    window.open("https://wa.me/6282319264646?text=Halo%20kak,%20saya%20mau%20pesan%20LCD");
-  } 
-  else if (p == "2") {
-    window.open("https://wa.me/6282319264646?text=Halo%20kak,%20saya%20mau%20pesan%20LCD");
-  } 
-  else if (p == "3") {
-    window.open("https://wa.me/62823192646?text=Halo%20kak,%20saya%20mau%20pesan%20LCD");
-  }
-}
-</script>
-<script>
-fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vS2JyZr-bsO2BKp3_GF5fO5D7bAcrywXQh7owph8Ng7LZxawQKwnw8Q57S5O-BvweUcW_FoqAIoavSL/pub?gid=0&single=true&output=csv")
-.then(r => r.text())
-.then(t => {
-  let rows = t.trim().split("\n");
-  let saldo = "";
-  for (let i = rows.length-1; i >= 1; i--) {
-    let cols = rows[i].split(",");
-    if (cols[3]) { saldo = cols[3]; break; }
-  }
-
-  saldo = saldo.replace(/[^0-9]/g,"");
-
-  document.getElementById("saldo").innerText =
-    "Rp " + Number(saldo).toLocaleString("id-ID");
-});
-</script>
-<script>
-/* ===============================
-   SET DURASI PRODUK MEMBER (7 HARI)
-================================= */
-const DURATION = 7 * 24 * 60 * 60 * 1000;
-
-/* ===============================
-   PARSE TANGGAL INDONESIA
-   contoh: 02/02/2026 23:45:18
-================================= */
 function parseTanggalID(t){
   if(!t) return null;
   const p = t.split(/[/ :]/);
   if(p.length < 3) return null;
-
-  return new Date(
-    p[2],        // tahun
-    p[1]-1,      // bulan
-    p[0],        // tanggal
-    p[3] || 0,   // jam
-    p[4] || 0,   // menit
-    p[5] || 0    // detik
-  ).getTime();
+  return new Date(p[2], p[1]-1, p[0], p[3]||0, p[4]||0, p[5]||0).getTime();
 }
 
-/* ===============================
-   UPDATE TIMER PRODUK MEMBER
-================================= */
+fetch(sheetUrl)
+.then(r => r.text())
+.then(t => {
+  const rows = t.trim().split(/\r?\n/).slice(1);
+  const box = document.getElementById("produkMember");
+
+  rows.forEach(r => {
+    const c = r.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/);
+    if(!c[1] || !c[7]) return;
+
+    const upload = c[0];
+    const nama = c[1];
+    const deskripsi = c[2];
+    const lokasi = c[10] || "";
+    const harga = c[7];
+    const wa = (c[8] || "").replace(/[^0-9]/g,"");
+    let img = (c[9] || "").replace(/"/g,"");
+
+    box.innerHTML += `
+    <div class="member-item bg-white rounded shadow p-3"
+         data-upload="${upload}">
+      <div class="member-timer text-xs font-semibold mb-1"></div>
+
+      <button onclick="window.open('${img}','_blank')"
+        class="block w-full text-blue-600 underline font-bold text-left">
+        Lihat Foto Produk
+      </button>
+
+      <h3 class="text-lg font-bold mt-2">${nama}</h3>
+      <p class="text-xs text-gray-600 mt-1">${deskripsi}</p>
+      <p class="text-xs text-gray-500 mt-1">📍 ${lokasi}</p>
+
+      <p class="text-green-600 font-bold mt-1">
+        Rp ${Number(harga).toLocaleString("id-ID")}
+      </p>
+
+      <a href="https://wa.me/${wa}?text=${encodeURIComponent(
+        'Halo kak, saya mau tanya produk ' + nama + ', apakah masih ada?'
+      )}"
+      target="_blank"
+      class="block bg-green-600 hover:bg-green-700 text-white text-center py-2 rounded mt-2">
+        WhatsApp Penjual
+      </a>
+    </div>`;
+  });
+
+  updateMemberTimers();
+  setInterval(updateMemberTimers, 1000);
+});
+
 function updateMemberTimers(){
-  document.querySelectorAll('.product-card').forEach(card => {
-
-    const upload = card.dataset.upload;
-    if(!upload) return;
-
-    const start = parseTanggalID(upload);
+  document.querySelectorAll('.member-item').forEach(card => {
+    const start = parseTanggalID(card.dataset.upload);
     if(!start) return;
 
-    const now  = Date.now();
-    const diff = start + DURATION - now;
-
-    // ⛔ waktu habis → hapus produk
+    const diff = start + DURATION - Date.now();
     if(diff <= 0){
       card.remove();
       return;
@@ -253,30 +201,15 @@ function updateMemberTimers(){
     const d = Math.floor(diff / (1000*60*60*24));
     const h = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
 
-    const timer = card.querySelector('.member-timer');
+    const timer = card.querySelector(".member-timer");
     if(timer){
-      let teks = `⏳ Sisa `;
-      if(d > 0) teks += `${d} hari `;
-      teks += `${h} jam`;
-
-      // warna default
-      timer.className = "member-timer text-xs font-semibold mb-1 text-orange-600";
-
-      // 🔴 jika sisa 1 hari atau kurang
-      if(d <= 1){
-        timer.className = "member-timer text-xs font-semibold mb-1 text-red-600";
-      }
-
-      timer.innerText = teks;
+      timer.textContent = `⏳ Sisa ${d > 0 ? d + " hari " : ""}${h} jam`;
+      timer.className =
+        "member-timer text-xs font-semibold mb-1 " +
+        (d <= 1 ? "text-red-600" : "text-orange-600");
     }
-
   });
 }
-
-// jalankan
-updateMemberTimers();
-setInterval(updateMemberTimers, 1000);
 </script>
-
 </body>
 </html>
