@@ -9,54 +9,44 @@
 
 <body class="bg-gray-100 p-4">
 
-<marquee behavior="scroll" direction="left" scrollamount="8"
-style="background:#f3f4f6;padding:20px;font-weight:bold;font-size:28px;">
+<!-- MARQUEE -->
+<marquee scrollamount="8"
+style="background:#f3f4f6;padding:20px;font-weight:bold;font-size:24px;">
 🛒 Halaman Jual Beli Produk • Upload produk Anda • Mari tumbuh & sukses bersama
 </marquee>
 
 <div class="max-w-3xl mx-auto bg-white rounded shadow p-4">
 
-<h1 class="text-xl font-bold text-center mb-3">
+<h1 class="text-xl font-bold text-center mb-4">
 Marketplace besar untuk barang baru & bekas
 </h1>
 
-<!-- 🔍 PENCARIAN -->
-<input 
-  id="searchProduk"
-  type="text"
-  placeholder="🔍 Cari produk (nama, deskripsi, lokasi)..."
-  class="w-full mb-4 p-3 rounded-xl border focus:outline-none focus:ring-2 focus:ring-green-500">
-
-<!-- ================= PRODUK MITRA ================= -->
-<h2 class="text-lg font-semibold mt-4 mb-2 text-green-700">
-🟢 Produk Tetap
-</h2>
+<!-- ================= PRODUK TETAP ================= -->
+<h2 class="text-lg font-semibold mt-4 mb-3 text-green-700">🟢 Produk Tetap</h2>
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-<!-- PRODUK 1 -->
-<div class="bg-white rounded-xl shadow p-4 text-center flex flex-col justify-between search-item">
-<img src="IMG_20260204_130958.jpg" class="h-40 w-full object-contain rounded mb-2">
-<p class="font-semibold">
-RELIFE RL-530 Contact Cleaner – pembersih PCB & konektor
+<!-- RELIFE -->
+<div class="bg-white rounded-xl shadow p-4 flex flex-col">
+<img src="IMG_20260204_130958.jpg" class="h-40 object-contain mb-2">
+<p class="text-sm">
+RELIFE RL-530 Contact Cleaner untuk PCB, konektor & port charger.
 </p>
 <p class="font-bold mt-2">Rp 35.000</p>
 <a href="https://wa.me/6282319264646"
-target="_blank"
-class="mt-auto bg-green-500 text-white py-2 rounded-xl block text-center">
+class="mt-auto bg-green-500 text-white py-2 rounded text-center">
 Pesan WA
 </a>
 </div>
 
-<!-- PRODUK 2 -->
-<div class="bg-white rounded-xl shadow p-4 text-center flex flex-col justify-between search-item">
-<img src="unlocktool.jpg" class="h-40 w-full object-contain rounded mb-2">
-<p class="font-semibold">REMOTE SERVICE</p>
+<!-- UNLOCK -->
+<div class="bg-white rounded-xl shadow p-4 flex flex-col">
+<img src="unlocktool.jpg" class="h-40 object-contain mb-2">
+<p class="font-semibold">UNLOCKTOOL – Remote Service</p>
 <p class="text-sm">07:00 – 24:00 WIB</p>
-<p class="font-bold mt-2">Hubungi Penjual</p>
+<p class="font-bold mt-2">Rp 0</p>
 <a href="https://wa.me/6282319264646"
-target="_blank"
-class="mt-auto bg-green-500 text-white py-2 rounded-xl block text-center">
+class="mt-auto bg-green-500 text-white py-2 rounded text-center">
 Pesan WA
 </a>
 </div>
@@ -64,25 +54,30 @@ Pesan WA
 </div>
 
 <!-- ================= PRODUK MEMBER ================= -->
-<h2 class="text-lg font-semibold mt-6 mb-2 text-orange-600">
+<h2 class="text-lg font-semibold mt-8 mb-2 text-orange-600">
 🟡 Produk Member (7 Hari)
 </h2>
 
+<p class="text-sm text-gray-600 mb-3">
+Produk otomatis tampil 7 hari & akan hilang sendiri.
+</p>
+
 <a href="https://forms.gle/iCPE6H5YbxjWzkpN9"
 target="_blank"
-class="block text-center mb-4 bg-green-500 hover:bg-green-600 text-white py-3 rounded-xl font-semibold">
+class="block mb-4 bg-green-500 text-white py-3 rounded-xl text-center font-semibold">
 ➕ Upload Produk Anda Di Sini
 </a>
 
 <div id="produkMember" class="grid grid-cols-2 gap-3"></div>
 
-<a href="index.html" class="block text-center text-blue-600 mt-6">
+<a href="index.html"
+class="block text-center text-blue-600 mt-6">
 ← Kembali ke Beranda
 </a>
 
 </div>
 
-<!-- ================= FETCH PRODUK MEMBER ================= -->
+<!-- ================= SCRIPT PRODUK MEMBER ================= -->
 <script>
 const sheetUrl =
 "https://docs.google.com/spreadsheets/d/19AfachAS9ZyNuut61RB1wqyI_AI6BsmNT1SIWhmSIn8/export?format=csv&gid=833555455";
@@ -91,87 +86,78 @@ fetch(sheetUrl)
 .then(r=>r.text())
 .then(t=>{
   const rows = t.trim().split(/\r?\n/).slice(1);
-  const box = document.getElementById("produkMember");
+  const box  = document.getElementById("produkMember");
 
   rows.forEach(r=>{
     const c = r.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/);
+
     if(!c[1] || !c[7]) return;
 
-    const upload = c[0];
     const nama = c[1];
-    const deskripsi = c[2];
+    const deskripsi = c[2] || "";
     const lokasi = c[10] || "";
-    let harga = (c[7]||"").replace(/[^0-9]/g,"");
-    harga = Number(harga);
+    const harga = c[7];
     const wa = (c[8]||"").replace(/[^0-9]/g,"");
     const img = (c[9]||"").replace(/"/g,"");
 
     box.innerHTML += `
-    <div class="bg-white rounded shadow p-2 search-item member-item"
-         data-upload="${upload}">
+    <div class="member-item bg-white rounded shadow p-3"
+         data-start="${Date.now()}">
 
-      <div class="member-timer text-xs font-semibold mb-1"></div>
+      <div class="member-timer text-xs font-semibold mb-1 text-orange-600"></div>
 
-      ${img ? `
-      <a href="${img}" target="_blank"
-       class="block text-blue-600 underline font-bold text-left">
-       Lihat Foto Produk
-      </a>` : ""}
+      <button onclick="window.open('${img}','_blank')"
+      class="text-blue-600 underline font-bold text-left">
+      Lihat Foto Produk
+      </button>
 
-      <h3 class="text-lg font-bold mt-2">${nama}</h3>
+      <h3 class="font-bold mt-1">${nama}</h3>
       <p class="text-xs text-gray-600">${deskripsi}</p>
       <p class="text-xs text-gray-500">📍 ${lokasi}</p>
 
       <p class="text-green-600 font-bold mt-1">
-      Rp ${harga.toLocaleString("id-ID")}
+      Rp ${Number(harga).toLocaleString("id-ID")}
       </p>
 
-      <a href="https://wa.me/${wa}"
+      <a href="https://wa.me/${wa}?text=${encodeURIComponent(
+        'Halo kak, saya mau tanya produk ' + nama
+      )}"
       target="_blank"
       class="block bg-green-600 text-white text-center py-2 rounded mt-2">
       WhatsApp Penjual
       </a>
     </div>`;
   });
-
-  updateTimerMember();
 });
 </script>
 
-<!-- ================= TIMER 7 HARI ================= -->
+<!-- ================= SCRIPT TIMER 7 HARI ================= -->
 <script>
-const DURASI_7_HARI = 7*24*60*60*1000;
+const DURASI = 7 * 24 * 60 * 60 * 1000;
 
-function updateTimerMember(){
+function updateTimer(){
   document.querySelectorAll(".member-item").forEach(card=>{
-    const start = new Date(card.dataset.upload).getTime();
-    if(!start) return;
+    const start = Number(card.dataset.start);
+    const diff  = start + DURASI - Date.now();
 
-    const diff = start + DURASI_7_HARI - Date.now();
-    if(diff<=0){ card.remove(); return; }
+    if(diff <= 0){
+      card.remove();
+      return;
+    }
 
-    const d = Math.floor(diff/(1000*60*60*24));
-    const h = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+    const hari = Math.floor(diff / (1000*60*60*24));
+    const jam  = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
 
     const timer = card.querySelector(".member-timer");
-    timer.innerHTML = `⏳ Sisa ${d>0?d+" hari ":""}${h} jam`;
+    timer.textContent = `⏳ Sisa ${hari} hari ${jam} jam`;
     timer.className =
       "member-timer text-xs font-semibold mb-1 " +
-      (d<=1 ? "text-red-600" : "text-orange-600");
+      (hari <= 1 ? "text-red-600" : "text-orange-600");
   });
 }
 
-setInterval(updateTimerMember,60000);
-</script>
-
-<!-- ================= SEARCH ================= -->
-<script>
-document.getElementById("searchProduk").addEventListener("input",function(){
-  const k = this.value.toLowerCase();
-  document.querySelectorAll(".search-item").forEach(i=>{
-    i.style.display = i.innerText.toLowerCase().includes(k) ? "" : "none";
-  });
-});
+updateTimer();
+setInterval(updateTimer, 60000);
 </script>
 
 </body>
