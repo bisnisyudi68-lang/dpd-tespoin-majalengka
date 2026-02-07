@@ -219,25 +219,27 @@ const now = new Date().getTime();
 const diff = start + duration - now;
 
 if(diff<=0){
-card.remove(); // produk hilang
+card.remove();
 return;
 }
 
 const d = Math.floor(diff / (1000*60*60*24));
 const h = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
 const m = Math.floor((diff % (1000*60*60)) / (1000*60));
+const s = Math.floor((diff % (1000*60)) / 1000);
 
 const timer = card.querySelector(".member-timer");
 if(timer){
-timer.innerHTML = `⏳ Sisa aktif: ${d} hari ${h} jam`;
+timer.innerHTML=`⏳ ${d}h ${h}j ${m}m ${s}d`;
 }
 
 });
 }
 
 updateMemberTimers();
-setInterval(updateMemberTimers, 60000);
+setInterval(updateMemberTimers,1000);
 </script>
+
 
 </body>
 </html>
