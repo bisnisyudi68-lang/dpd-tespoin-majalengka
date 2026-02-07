@@ -229,13 +229,22 @@ const m = Math.floor((diff % (1000*60*60)) / (1000*60));
 const s = Math.floor((diff % (1000*60)) / 1000);
 
 const timer = card.querySelector(".member-timer");
-if(timer){
-timer.innerHTML=`⏳ ${d}h ${h}j ${m}m ${s}d`;
-}
+if (timer) {
+  let teks = "⏳ Sisa ";
 
-});
-}
+  if (d > 0) teks += `${d} hari `;
+  if (h > 0) teks += `${h} jam`;
 
+  // default warna
+  timer.className = "member-timer text-xs font-semibold mb-1 text-orange-600";
+
+  // 🔴 jika sisa 1 hari atau kurang
+  if (d <= 1) {
+    timer.className = "member-timer text-xs font-semibold mb-1 text-red-600";
+  }
+
+  timer.innerText = teks.trim();
+}
 updateMemberTimers();
 setInterval(updateMemberTimers,1000);
 </script>
