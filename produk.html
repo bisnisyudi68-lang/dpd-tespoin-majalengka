@@ -206,40 +206,38 @@ fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vS2JyZr-bsO2BKp3_GF5fO5D7
 });
 </script>
 <script>
-const duration = 7*24*60*60*1000;
+const duration = 7 * 24 * 60 * 60 * 1000; // 7 hari
 
 function updateMemberTimers(){
- document.querySelectorAll('.product-card').forEach(card=>{
+document.querySelectorAll('.product-card').forEach(card=>{
 
-   const upload = card.dataset.upload;
-   if(!upload) return;
+const upload = card.dataset.upload;
+if(!upload) return;
 
-   const start = new Date(upload).getTime();
-   const now = new Date().getTime();
-   const diff = start + duration - now;
+const start = new Date(upload).getTime();
+const now = new Date().getTime();
+const diff = start + duration - now;
 
-   if(diff<=0){
-     card.remove(); // PRODUK HILANG
-     return;
-   }
+if(diff<=0){
+card.remove(); // produk hilang
+return;
+}
 
-   const d = Math.floor(diff / (1000*60*60*24));
+const d = Math.floor(diff / (1000*60*60*24));
 const h = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
 const m = Math.floor((diff % (1000*60*60)) / (1000*60));
 
 const timer = card.querySelector(".member-timer");
-    if(timer){
-    timer.innerHTML=`⏳ Sisa: ${d} hari ${h} jam ${m} menit`;
+if(timer){
+timer.innerHTML = `⏳ Sisa aktif: ${d} hari ${h} jam`;
 }
-});
 
+});
 }
 
 updateMemberTimers();
 setInterval(updateMemberTimers, 60000);
-
-setInterval(updateMemberTimers, 60000); // update tiap 1 menit
-
 </script>
+
 </body>
 </html>
