@@ -129,7 +129,7 @@ fetch(sheetUrl)
   const c = r.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/);
 
   if(!c[1] || !c[6] || !c[7]) return;
-
+const upload    = c[0];  // Timestamp (A)
 const nama = c[1];
 const deskripsi = c[2];
 const lokasi = c[10]; // kolom K alamat_fix
@@ -140,8 +140,9 @@ if(!img) img = "";
 img = img.replace(/"/g,"").trim();
 
     box.innerHTML+=`
-<div class="product-card bg-white rounded shadow p-2" data-upload="${c[11]}">
-<div class="member-timer"></div>
+<<div class="product-card bg-white rounded shadow p-2"
+     data-upload="${upload}">
+  <div class="member-timer text-xs text-orange-600 font-semibold mb-1"></div>
 <button onclick="window.open('${img}','_blank')"
 class="block w-full text-blue-600 underline font-bold text-base mt-2 text-left">
 Lihat Foto Produk
